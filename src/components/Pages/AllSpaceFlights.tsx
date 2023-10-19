@@ -60,6 +60,48 @@ function AllSpaceFlights() {
     }
   };
 
+  const visiblePages = 5; // Adjust this value to change the number of visible pages
+  const renderPages = () => {
+    const pageButtons = [];
+
+    // Render the first few pages
+    for (let i = 1; i <= Math.min(visiblePages, totalPages); i++) {
+      pageButtons.push(
+        <button
+          key={i}
+          onClick={() => paginate(i)}
+          className={
+            currentPage === i ? "border border-blue-700 p-2" : "border p-2"
+          }
+        >
+          {i}
+        </button>
+      );
+    }
+
+    if (visiblePages < totalPages) {
+      // Add a dot if there are more pages to the right
+      pageButtons.push(<span key="dot">...</span>);
+    }
+
+    // Render the last page
+    pageButtons.push(
+      <button
+        key={totalPages}
+        onClick={() => paginate(totalPages)}
+        className={
+          currentPage === totalPages
+            ? "border border-blue-700 p-2"
+            : "border p-2"
+        }
+      >
+        {totalPages}
+      </button>
+    );
+
+    return pageButtons;
+  };
+
   return (
     <>
       <div>
@@ -68,13 +110,15 @@ function AllSpaceFlights() {
             <Flights key={index} spaceFlight={spaceFlight} />
           ))}
         </div>
-        <div className="my-16 text-center">
+
+        {/* pagination */}
+        {/* <div className="my-16 text-center">
           <button onClick={prevPage} className="border p-2">
             Prev
           </button>
           {Array.from({ length: totalPages }, (_, index) => (
             <button
-              key={index + 1}
+              key={index}
               onClick={() => paginate(index + 1)}
               className={
                 currentPage === index + 1
@@ -86,6 +130,17 @@ function AllSpaceFlights() {
             </button>
           ))}
 
+          <button onClick={nextPage} className="border p-2">
+            Next
+          </button>
+        </div> */}
+
+        {/* pagination */}
+        <div className="my-16 text-center">
+          <button onClick={prevPage} className="border p-2">
+            Prev
+          </button>
+          {renderPages()}
           <button onClick={nextPage} className="border p-2">
             Next
           </button>
