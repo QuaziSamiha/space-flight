@@ -1,3 +1,5 @@
+import AllSpaceFlights from "./AllSpaceFlights";
+
 interface Props {}
 
 function Home(props: Props) {
@@ -7,7 +9,17 @@ function Home(props: Props) {
   return (
     <>
       <div>
-        <h1>this is homeee</h1>
+        <div>
+          <h1>Spaceflight Details</h1>
+          <p>
+            <small>
+              Find out the elaborate features of all the past big spaceflights
+            </small>
+          </p>
+        </div>
+        <section>
+          <AllSpaceFlights />
+        </section>
       </div>
     </>
   );
