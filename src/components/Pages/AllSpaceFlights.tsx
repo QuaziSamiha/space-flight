@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Flight from "./Flights";
+import Flights from "./Flights";
 
 interface FlightData {
   flight_number: number;
@@ -17,6 +17,9 @@ interface FlightData {
 
 function AllSpaceFlights() {
   const [allSpaceFlights, setAllSpaceFlights] = useState<FlightData[]>([]);
+  const [flightsPerPage] = useState(9);
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(allSpaceFlights.length / flightsPerPage);
 
   useEffect(() => {
     // Fetch data from the SpaceX API
@@ -33,12 +36,60 @@ function AllSpaceFlights() {
 
   // console.log(allSpaceFlights);
 
+  const indexOfLastLaunch = currentPage * flightsPerPage;
+  const indexOfFirstLaunch = indexOfLastLaunch - flightsPerPage;
+  const currentSpaceFlights = allSpaceFlights.slice(
+    indexOfFirstLaunch,
+    indexOfLastLaunch
+  );
+
+  // Function to change the current page
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <>
-      <div className="md:grid md:grid-cols-3 gap-3">
-        {allSpaceFlights.map((spaceFlight, index) => (
-          <Flight key={index} spaceFlight={spaceFlight} />
-        ))}
+      <div>
+        <div className="md:grid md:grid-cols-3 gap-3">
+          {currentSpaceFlights.map((spaceFlight, index) => (
+            <Flights key={index} spaceFlight={spaceFlight} />
+          ))}
+        </div>
+        <div className="my-16 text-center">
+          <button onClick={prevPage} className="border p-2">
+            Prev
+          </button>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => paginate(index + 1)}
+              className={
+                currentPage === index + 1
+                  ? "border border-blue-700 p-2"
+                  : "border p-2"
+              }
+            >
+              {index + 1}
+            </button>
+          ))}
+
+          <button onClick={nextPage} className="border p-2">
+            Next
+          </button>
+        </div>
       </div>
     </>
   );

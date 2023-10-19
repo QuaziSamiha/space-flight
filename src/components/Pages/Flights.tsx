@@ -25,7 +25,7 @@ function Flights({ spaceFlight }: FlightProps) {
   // Define options for formatting the date
   const dateFormatOptions = {
     year: "numeric",
-    month: "short", // Display the month in short form (e.g., "Aug" for August)
+    month: "short",
     day: "numeric",
   };
   // Format the date
