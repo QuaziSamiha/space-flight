@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import Footer from "../Shared/Footer";
 
 interface Props {}
 
@@ -11,6 +12,7 @@ function Main(props: Props) {
       <div>
         <h1>this is root layout</h1>
         <Outlet />
+        <Footer />
       </div>
     </>
   );
