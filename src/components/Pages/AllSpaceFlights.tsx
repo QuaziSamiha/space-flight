@@ -18,7 +18,12 @@ interface FlightData {
 function AllSpaceFlights() {
   const [allSpaceFlights, setAllSpaceFlights] = useState<FlightData[]>([]);
   const [flightsPerPage] = useState(9);
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(() => {
+    // Retrieve the current page from localStorage, or default to page 1
+    const storedPage = localStorage.getItem("currentPage");
+    return storedPage ? parseInt(storedPage) : 1;
+  });
   const totalPages = Math.ceil(allSpaceFlights.length / flightsPerPage);
 
   useEffect(() => {
@@ -33,6 +38,11 @@ function AllSpaceFlights() {
         console.error("Error fetching data:", error);
       });
   }, []);
+
+  // Save the current page to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("currentPage", currentPage.toString());
+  }, [currentPage]);
 
   // console.log(allSpaceFlights);
 
@@ -60,7 +70,7 @@ function AllSpaceFlights() {
     }
   };
 
-  const visiblePages = 5; // Adjust this value to change the number of visible pages
+  const visiblePages = 6; // Adjust this value to change the number of visible pages
   const renderPages = () => {
     const pageButtons = [];
 
