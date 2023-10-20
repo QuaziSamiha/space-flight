@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Flights from "./Flights";
+import SpecificSearch from "./SpecificSearch";
 
 interface FlightData {
   flight_number: number;
@@ -12,7 +13,7 @@ interface FlightData {
     mission_patch_small: string;
   };
   launch_date_utc: string;
-  // Add other properties from your SpaceX API response
+  upcoming: boolean;
 }
 
 function AllSpaceFlights() {
@@ -24,6 +25,7 @@ function AllSpaceFlights() {
     const storedPage = localStorage.getItem("currentPage");
     return storedPage ? parseInt(storedPage) : 1;
   });
+
   const totalPages = Math.ceil(allSpaceFlights.length / flightsPerPage);
 
   useEffect(() => {
@@ -115,9 +117,14 @@ function AllSpaceFlights() {
   return (
     <>
       <div>
+        <SpecificSearch />
         <div className="md:grid md:grid-cols-3 gap-3">
           {currentSpaceFlights.map((spaceFlight, index) => (
-            <Flights key={index} spaceFlight={spaceFlight} />
+            <Flights
+              key={index}
+              spaceFlight={spaceFlight}
+              // checkUpcoming={checkUpcoming}
+            />
           ))}
         </div>
 

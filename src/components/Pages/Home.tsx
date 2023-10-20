@@ -1,22 +1,18 @@
 import AllSpaceFlights from "./AllSpaceFlights";
 
-interface Props {}
-
-function Home(props: Props) {
-  // eslint-disable-next-line no-empty-pattern
-  const {} = props;
-
+function Home() {
   return (
     <>
       <div>
-        <div>
-          <h1>Spaceflight Details</h1>
-          <p>
+        <div className="mx-auto text-center my-16">
+          <h1 className="my-4">Spaceflight Details</h1>
+          <p className="my-6">
             <small>
               Find out the elaborate features of all the past big spaceflights
             </small>
           </p>
         </div>
+
         <section>
           <AllSpaceFlights />
         </section>

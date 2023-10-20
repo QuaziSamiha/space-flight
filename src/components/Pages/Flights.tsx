@@ -12,27 +12,30 @@ interface SpaceFlight {
     mission_patch_small: string;
   };
   launch_date_utc: string;
+  upcoming: boolean;
   // Define the structure of your spaceFlight data here
 }
 function Flights({ spaceFlight }: FlightProps) {
   // console.log(spaceFlight);
-  const { mission_name, rocket, launch_success, links, launch_date_utc } =
-    spaceFlight;
+  const {
+    mission_name,
+    rocket,
+    launch_success,
+    links,
+    launch_date_utc,
+    // upcoming,
+  } = spaceFlight;
+  // console.log(upcoming);
   const { rocket_name } = rocket;
   const { mission_patch_small } = links;
 
   const launchDate = new Date(launch_date_utc);
-  // Define options for formatting the date
-  const dateFormatOptions = {
+
+  const formattedLaunchDate = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
-  };
-  // Format the date
-  const formattedLaunchDate = new Intl.DateTimeFormat(
-    "en-US",
-    dateFormatOptions
-  ).format(launchDate);
+  }).format(launchDate);
 
   // console.log(formattedLaunchDate);
 
