@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useSearch } from "../../context/SearchContext";
 
 function SpecificSearch() {
-  const [upcomingButton, setUpcomingButton] = useState(false);
+  const { searchInfo, setSearchInfo } = useSearch();
+  const [upcomingFlights, setUpcomingFlights] = useState(false);
   const launchStatus = [
     { name: "Success", value: true },
     { name: "Failed", value: false },
@@ -20,19 +22,27 @@ function SpecificSearch() {
     const launchDate = (
       form.elements.namedItem("launchDate") as HTMLSelectElement
     ).value;
-    const searchInfo = { flightName, launchStatus, launchDate, upcomingButton };
-    console.log(searchInfo);
+    // const searchInformation = { flightName, launchStatus, launchDate, upcomingFlights };
+    // console.log(searchInfo);
+    setSearchInfo({
+      ...searchInfo,
+      flightName,
+      launchStatus,
+      launchDate,
+      upcomingFlights,
+      filtered: true,
+    });
   };
 
-  // console.log(upcomingButton);
+  // console.log(upcomingFlights);
   return (
     <>
       <div className="my-8">
         <div className="my-8 flex justify-end px-5">
-          <button onClick={() => setUpcomingButton(!upcomingButton)}>
+          <button onClick={() => setUpcomingFlights(!upcomingFlights)}>
             <div
               className={
-                upcomingButton
+                upcomingFlights
                   ? "w-4 h-4 px-1 mx-1 rounded-lg bg-blue-700 border border-blue-900"
                   : "w-4 h-4 px-1 mx-1 rounded-lg border border-gray-600"
               }

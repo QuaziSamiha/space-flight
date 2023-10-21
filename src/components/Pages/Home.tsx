@@ -1,3 +1,4 @@
+import { SearchProvider } from "../../context/SearchContext";
 import AllSpaceFlights from "./AllSpaceFlights";
 
 function Home() {
@@ -13,9 +14,11 @@ function Home() {
           </p>
         </div>
 
-        <section>
-          <AllSpaceFlights />
-        </section>
+        <SearchProvider>
+          <section>
+            <AllSpaceFlights />
+          </section>
+        </SearchProvider>
       </div>
     </>
   );

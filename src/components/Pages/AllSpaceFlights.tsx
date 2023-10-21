@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Flights from "./Flights";
 import SpecificSearch from "./SpecificSearch";
+import { useSearch } from "../../context/SearchContext";
 
 interface FlightData {
   flight_number: number;
@@ -25,7 +26,10 @@ function AllSpaceFlights() {
     const storedPage = localStorage.getItem("currentPage");
     return storedPage ? parseInt(storedPage) : 1;
   });
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // const [filtered, setFiltered] = useState(false);
+  const { searchInfo } = useSearch();
+  // console.log(searchInfo);
   const totalPages = Math.ceil(allSpaceFlights.length / flightsPerPage);
 
   useEffect(() => {
@@ -40,6 +44,63 @@ function AllSpaceFlights() {
         console.error("Error fetching data:", error);
       });
   }, []);
+
+  useEffect(() => {
+    console.log(searchInfo);
+    // setFiltered(searchInfo.filtered);
+    // Filter spaceflights based on searchInfo
+    let filteredFlights = allSpaceFlights;
+
+    if (searchInfo.flightName) {
+      filteredFlights = filteredFlights.filter((flight) =>
+        flight.rocket.rocket_name
+          .toLowerCase()
+          .includes(searchInfo.flightName.toLowerCase())
+      );
+    }
+
+    if (searchInfo.launchStatus !== "") {
+      const launchStatusString = searchInfo.launchStatus; // Replace with your string value
+      const launchStatusBoolean = launchStatusString === "true" ? true : false;
+      // const isSuccess = searchInfo.launchStatus === "true";
+      filteredFlights = filteredFlights.filter(
+        (flight) => flight.launch_success === launchStatusBoolean
+      );
+    }
+
+    if (searchInfo.upcomingFlights) {
+      filteredFlights = filteredFlights.filter(
+        (flight) => flight.upcoming === true
+      );
+    } else {
+      filteredFlights = filteredFlights.filter(
+        (flight) => flight.upcoming === false
+      );
+    }
+
+    if (searchInfo.launchDate) {
+      const currentDate = new Date();
+      switch (searchInfo.launchDate) {
+        case "Last Week":
+          currentDate.setDate(currentDate.getDate() - 7);
+          break;
+        case "Last Month":
+          currentDate.setMonth(currentDate.getMonth() - 1);
+          break;
+        case "Last Year":
+          currentDate.setFullYear(currentDate.getFullYear() - 1);
+          break;
+        default:
+          break;
+      }
+      filteredFlights = filteredFlights.filter(
+        (flight) => new Date(flight.launch_date_utc) >= currentDate
+      );
+    }
+
+    // Update the filtered spaceflights
+    setAllSpaceFlights(filteredFlights);
+  }, [searchInfo.filtered]);
 
   // Save the current page to localStorage whenever it changes
   useEffect(() => {
@@ -119,6 +180,8 @@ function AllSpaceFlights() {
       <div>
         <SpecificSearch />
         <div className="md:grid md:grid-cols-3 gap-3">
+          {/* {filtered === false ? (
+            <> */}
           {currentSpaceFlights.map((spaceFlight, index) => (
             <Flights
               key={index}
@@ -126,6 +189,10 @@ function AllSpaceFlights() {
               // checkUpcoming={checkUpcoming}
             />
           ))}
+          {/* </>
+          ) : (
+            <>this will be shown later</>
+          )} */}
         </div>
 
         {/* pagination */}
