@@ -146,7 +146,9 @@ function AllSpaceFlights() {
           key={i}
           onClick={() => paginate(i)}
           className={
-            currentPage === i ? "border border-blue-700 p-2" : "border p-2"
+            currentPage === i
+              ? "border border-[#0D6EFD] bg-[#0D6EFD] p-2 text-white"
+              : "border p-2"
           }
         >
           {i}
@@ -188,13 +190,13 @@ function AllSpaceFlights() {
         </div>
 
         {/* pagination */}
-        <div className="my-16 text-center">
-          <button onClick={prevPage} className="border p-2">
-            Prev
+        <div className="my-16 text-sm text-[#0D6EFD] text-center border border-[#DEE2E6]">
+          <button onClick={prevPage} className="px-2">
+            P
           </button>
           {renderPages()}
-          <button onClick={nextPage} className="border p-2">
-            Next
+          <button onClick={nextPage} className="px-2">
+            N
           </button>
         </div>
       </div>

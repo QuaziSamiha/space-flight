@@ -38,13 +38,13 @@ function SpecificSearch() {
   return (
     <>
       <div className="my-8">
-        <div className="my-8 flex justify-end px-5">
+        <div className="my-4 flex sm:justify-end px-5">
           <button onClick={() => setUpcomingFlights(!upcomingFlights)}>
             <div
               className={
                 upcomingFlights
-                  ? "w-4 h-4 px-1 mx-1 rounded-lg bg-blue-700 border border-blue-900"
-                  : "w-4 h-4 px-1 mx-1 rounded-lg border border-gray-600"
+                  ? " text-base w-4 h-4 px-1 mr-2 bg-blue-700 border border-blue-900"
+                  : " text-base w-4 h-4 px-1 mr-2 border border-gray-600"
               }
             ></div>
           </button>
@@ -52,35 +52,51 @@ function SpecificSearch() {
         </div>
         <div className="mx-5">
           <form onSubmit={handleSearch}>
-            <div className="md:grid md:grid-cols-3 gap-3">
-              <div>
+            <div className="md:grid sm:grid-cols-3 gap-3">
+              <div className="border rounded border-[#CED4DA] flex my-4 w-48 md:w-52">
+                {" "}
                 <input
                   type="text"
                   name="flightName"
                   id=""
-                  placeholder="Enter Rocket Name..."
+                  placeholder="Search..."
+                  className="pl-2 py-1 text-[#6C757D] leading-6 text-base font-normal"
                 />
-                <input type="submit" value="Search" />
+                <div className="bg-[#0D6EFD] px-2.5 py-1 text-white mr-0">
+                  <input type="submit" value="S" />
+                </div>
               </div>
-              <div className="md:ml-auto md:pr-5">
-                <select name="launchStatus" id="">
-                  <option value="" disabled>
-                    By Launch Status
+              <div className="sm:mx-8 md:ml-20 lg:ml-56 my-4 border border-[#CED4DA] rounded w-56  sm:w-44">
+                <select
+                  className="pl-1 pr-16 sm:pr-6 py-1"
+                  name="launchStatus"
+                  id=""
+                >
+                  <option className="text-[#6C757D]" value="Launch By Status">
+                    By Status Launch
                   </option>
                   {launchStatus.map((status, index) => (
-                    <option key={index} value={status.value.toString()}>
+                    <option
+                      className="text-[#212529]"
+                      key={index}
+                      value={status.value.toString()}
+                    >
                       {status.name}
                     </option>
                   ))}
                 </select>
               </div>
-              <div className="md:ml-auto">
-                <select name="launchDate" id="">
-                  <option value="" disabled>
+              <div className="md:ml-auto my-4 border border-[#CED4DA] rounded w-56 sm:w-44 ">
+                <select
+                  className="pl-1 pr-16 sm:pr-8 py-1"
+                  name="launchDate"
+                  id=""
+                >
+                  <option className="text-[#6C757D]" value="By Launch Date">
                     By Launch Date
                   </option>
                   {launchDates.map((date, index) => (
-                    <option key={index} value={date}>
+                    <option className="text-[#212529]" key={index} value={date}>
                       {date}
                     </option>
                   ))}
