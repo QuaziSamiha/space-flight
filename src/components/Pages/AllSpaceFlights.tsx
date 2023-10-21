@@ -72,6 +72,7 @@ function AllSpaceFlights() {
       filteredFlights = filteredFlights.filter(
         (flight) => flight.upcoming === true
       );
+      console.log(filteredFlights);
     } else {
       filteredFlights = filteredFlights.filter(
         (flight) => flight.upcoming === false
@@ -94,8 +95,9 @@ function AllSpaceFlights() {
           break;
       }
       filteredFlights = filteredFlights.filter(
-        (flight) => new Date(flight.launch_date_utc) >= currentDate
+        (flight) => new Date(flight.launch_date_utc) <= currentDate
       );
+      // console.log(currentDate);
     }
 
     // Update the filtered spaceflights
@@ -183,41 +185,13 @@ function AllSpaceFlights() {
           {/* {filtered === false ? (
             <> */}
           {currentSpaceFlights.map((spaceFlight, index) => (
-            <Flights
-              key={index}
-              spaceFlight={spaceFlight}
-              // checkUpcoming={checkUpcoming}
-            />
+            <Flights key={index} spaceFlight={spaceFlight} />
           ))}
           {/* </>
           ) : (
             <>this will be shown later</>
           )} */}
         </div>
-
-        {/* pagination */}
-        {/* <div className="my-16 text-center">
-          <button onClick={prevPage} className="border p-2">
-            Prev
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index}
-              onClick={() => paginate(index + 1)}
-              className={
-                currentPage === index + 1
-                  ? "border border-blue-700 p-2"
-                  : "border p-2"
-              }
-            >
-              {index + 1}
-            </button>
-          ))}
-
-          <button onClick={nextPage} className="border p-2">
-            Next
-          </button>
-        </div> */}
 
         {/* pagination */}
         <div className="my-16 text-center">

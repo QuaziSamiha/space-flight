@@ -56,7 +56,7 @@ function Flights({ spaceFlight }: FlightProps) {
             <span>Not Mentioned</span>
           )}
         </p>
-        {/* <p>{upcoming ? "true" : "false"}</p> */}
+        {/* <p>Upcoming: {upcoming === true ? "true" : "false"}</p> */}
       </div>
     </>
   );

@@ -23,7 +23,7 @@ function SpecificSearch() {
       form.elements.namedItem("launchDate") as HTMLSelectElement
     ).value;
     // const searchInformation = { flightName, launchStatus, launchDate, upcomingFlights };
-    // console.log(searchInfo);
+    // console.log(searchInformation);
     setSearchInfo({
       ...searchInfo,
       flightName,
