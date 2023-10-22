@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Flights from "./Flights";
 import SpecificSearch from "./SpecificSearch";
 import { useSearch } from "../../context/SearchContext";
+import { ChevronRightIcon } from "@heroicons/react/20/solid";
+import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 
 interface FlightData {
   flight_number: number;
@@ -46,7 +48,7 @@ function AllSpaceFlights() {
   }, []);
 
   useEffect(() => {
-    console.log(searchInfo);
+    // console.log(searchInfo);
     // setFiltered(searchInfo.filtered);
     // Filter spaceflights based on searchInfo
     let filteredFlights = allSpaceFlights;
@@ -190,14 +192,22 @@ function AllSpaceFlights() {
         </div>
 
         {/* pagination */}
-        <div className="my-16 text-sm text-[#0D6EFD] text-center border border-[#DEE2E6]">
-          <button onClick={prevPage} className="px-2">
-            P
-          </button>
+        <div className="my-16 pt-0 text-sm text-[#0D6EFD] text-center border border-[#DEE2E6] flex items-end justify-center">
+          <div className="w-8 h-8 flex items-center justify-center ">
+            <div>
+              <button onClick={prevPage} className="">
+                <ChevronLeftIcon className="w-8 h-8 p-2" />
+              </button>
+            </div>
+          </div>{" "}
           {renderPages()}
-          <button onClick={nextPage} className="px-2">
-            N
-          </button>
+          <div className="w-8 h-8 flex items-center justify-center">
+            <div>
+              <button onClick={nextPage} className="">
+                <ChevronRightIcon className="w-8 h-8 p-2" />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </>

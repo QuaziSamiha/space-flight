@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSearch } from "../../context/SearchContext";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 
 function SpecificSearch() {
   const { searchInfo, setSearchInfo } = useSearch();
@@ -63,7 +64,10 @@ function SpecificSearch() {
                   className="pl-2 py-1 text-[#6C757D] leading-6 text-base font-normal"
                 />
                 <div className="bg-[#0D6EFD] px-2.5 py-1 text-white mr-0">
-                  <input type="submit" value="S" />
+                  {/* <input type="submit" value="S" /> */}
+                  <button type="submit">
+                    <MagnifyingGlassIcon className="h-4 w-4" />
+                  </button>
                 </div>
               </div>
               <div className="sm:mx-8 md:ml-20 lg:ml-56 my-4 border border-[#CED4DA] rounded w-56  sm:w-44">
