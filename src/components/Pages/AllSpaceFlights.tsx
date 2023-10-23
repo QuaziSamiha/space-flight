@@ -17,19 +17,20 @@ interface FlightData {
   };
   launch_date_utc: string;
   upcoming: boolean;
+  currenSpaceFlight: [];
 }
 
 function AllSpaceFlights() {
   const [allSpaceFlights, setAllSpaceFlights] = useState<FlightData[]>([]);
+  const [filteredSpaceFlights, setFilteredSpaceFlights] = useState<
+    FlightData[]
+  >([]);
+  const [filtered, setFiltered] = useState(false);
   const [flightsPerPage] = useState(9);
-  // const [currentPage, setCurrentPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(() => {
-    // Retrieve the current page from localStorage, or default to page 1
     const storedPage = localStorage.getItem("currentPage");
     return storedPage ? parseInt(storedPage) : 1;
   });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const [filtered, setFiltered] = useState(false);
   const { searchInfo } = useSearch();
   // console.log(searchInfo);
   const totalPages = Math.ceil(allSpaceFlights.length / flightsPerPage);
@@ -41,6 +42,7 @@ function AllSpaceFlights() {
       .then((data) => {
         // Set the retrieved data to the allSpaceFlights state
         setAllSpaceFlights(data);
+        setFilteredSpaceFlights(data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -49,7 +51,7 @@ function AllSpaceFlights() {
 
   useEffect(() => {
     // console.log(searchInfo);
-    // setFiltered(searchInfo.filtered);
+    setFiltered(true);
     // Filter spaceflights based on searchInfo
     let filteredFlights = allSpaceFlights;
 
@@ -64,6 +66,7 @@ function AllSpaceFlights() {
     if (searchInfo.launchStatus !== "") {
       const launchStatusString = searchInfo.launchStatus; // Replace with your string value
       const launchStatusBoolean = launchStatusString === "true" ? true : false;
+      console.log(launchStatusBoolean);
       // const isSuccess = searchInfo.launchStatus === "true";
       filteredFlights = filteredFlights.filter(
         (flight) => flight.launch_success === launchStatusBoolean
@@ -99,28 +102,35 @@ function AllSpaceFlights() {
       filteredFlights = filteredFlights.filter(
         (flight) => new Date(flight.launch_date_utc) <= currentDate
       );
-      // console.log(currentDate);
     }
 
     // Update the filtered spaceflights
-    setAllSpaceFlights(filteredFlights);
-  }, [searchInfo.filtered]);
+    setFilteredSpaceFlights(filteredFlights);
+  }, [
+    searchInfo.flightName,
+    searchInfo.launchStatus,
+    searchInfo.upcomingFlights,
+    searchInfo.launchDate,
+  ]);
 
-  // Save the current page to localStorage whenever it changes
+  // // Save the current page to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("currentPage", currentPage.toString());
   }, [currentPage]);
 
-  // console.log(allSpaceFlights);
-
   const indexOfLastLaunch = currentPage * flightsPerPage;
   const indexOfFirstLaunch = indexOfLastLaunch - flightsPerPage;
+
+  const currentFilteredSpaceFlights = filteredSpaceFlights.slice(
+    indexOfFirstLaunch,
+    indexOfLastLaunch
+  );
   const currentSpaceFlights = allSpaceFlights.slice(
     indexOfFirstLaunch,
     indexOfLastLaunch
   );
 
-  // Function to change the current page
+  // // Function to change the current page
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
@@ -185,15 +195,25 @@ function AllSpaceFlights() {
     <>
       <div>
         <SpecificSearch />
-        <div className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {currentSpaceFlights.map((spaceFlight, index) => (
-            <Flights key={index} spaceFlight={spaceFlight} />
-          ))}
-        </div>
 
+        <div className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {filtered === true ? (
+            <>
+              {currentFilteredSpaceFlights.map((spaceFlight, index) => (
+                <Flights key={index} spaceFlight={spaceFlight} />
+              ))}
+            </>
+          ) : (
+            <>
+              {currentSpaceFlights.map((spaceFlight, index) => (
+                <Flights key={index} spaceFlight={spaceFlight} />
+              ))}
+            </>
+          )}
+        </div>
         {/* pagination */}
-        <div className="my-16 pt-0 text-sm text-[#0D6EFD] text-center border border-[#DEE2E6] flex items-end justify-center">
-          <div className="w-8 h-8 flex items-center justify-center ">
+        <div className="my-16 pt-0 text-sm text-[#0D6EFD] text-center flex items-end justify-center">
+          <div className="w-8 h-9 flex items-center justify-center  border border-[#DEE2E6]">
             <div>
               <button onClick={prevPage} className="">
                 <ChevronLeftIcon className="w-8 h-8 p-2" />
@@ -201,10 +221,10 @@ function AllSpaceFlights() {
             </div>
           </div>{" "}
           {renderPages()}
-          <div className="w-8 h-8 flex items-center justify-center">
+          <div className="w-8 h-9  flex items-center justify-center border border-[#DEE2E6]">
             <div>
               <button onClick={nextPage} className="">
-                <ChevronRightIcon className="w-8 h-8 p-2" />
+                <ChevronRightIcon className="w-10 h-10 p-2" />
               </button>
             </div>
           </div>

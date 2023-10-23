@@ -62,13 +62,13 @@ function Flights({ spaceFlight }: FlightProps) {
               Launch Status:{" "}
             </p>
             {launch_success === true ? (
-              <span className="bg-[#198754] text-[#FFFFFF] leading-3 rounded px-[4.2px] py-[7.8px] text-xs font-bold">
+              <span className="bg-[#198754] text-[#FFFFFF] leading-3 rounded px-4 py-[7.8px] text-xs font-bold">
                 Success
               </span>
             ) : launch_success === false ? (
-              <div className="bg-[#DC3545] text-[#FFFFFF] leading-3 rounded px-[4.2px] py-[7.8px] text-xs font-bold">
+              <span className="bg-[#DC3545] text-[#FFFFFF] leading-3 rounded px-4 py-[7.8px] text-xs font-bold">
                 Failed
-              </div>
+              </span>
             ) : (
               <span>Not Mentioned</span>
             )}

@@ -70,13 +70,13 @@ function SpecificSearch() {
                   </button>
                 </div>
               </div>
-              <div className="sm:mx-8 md:ml-20 lg:ml-56 my-4 border border-[#CED4DA] rounded w-56  sm:w-44">
+              <div className="sm:mx-8 md:ml-16 lg:ml-56 my-4 border border-[#CED4DA] rounded w-56 sm:w-44">
                 <select
-                  className="pl-1 pr-16 sm:pr-6 py-1"
+                  className="pl-1 pr-16 sm:pr-6 md:pr-1 py-1"
                   name="launchStatus"
                   id=""
                 >
-                  <option className="text-[#6C757D]" value="Launch By Status">
+                  <option className="text-[#6C757D]" value="">
                     By Status Launch
                   </option>
                   {launchStatus.map((status, index) => (
@@ -90,7 +90,7 @@ function SpecificSearch() {
                   ))}
                 </select>
               </div>
-              <div className="md:ml-auto my-4 border border-[#CED4DA] rounded w-56 sm:w-44 ">
+              <div className="md:ml-auto  my-4 border border-[#CED4DA] rounded w-56 sm:w-44 ">
                 <select
                   className="pl-1 pr-16 sm:pr-8 py-1"
                   name="launchDate"
